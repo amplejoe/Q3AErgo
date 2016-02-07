@@ -30,9 +30,9 @@ Controls:
 	'h' signals a heart beat.
 
 	Ingame debug options (bring up console with '~' and prepended with a '\'):
-	debugmod (NUM *)							debugging on/off
-	inchr (NUM +)									increase max heart rate by 5 (max: 300)
-	dechr (NUM -)									decrease max heart rate by 5 (min: 20)
-	incnumhrsamples (NUM uparrow)		increase number of taken hr samples for rate calculation (max: 60)
-	decnumhrsamples (NUM downarrow)	decrease number of taken hr samples for rate calculation (min: 1)
-	ergostatus											settings information
+	debugmod (NUM *)                  debugging on/off
+	inchr (NUM +)                     increase max heart rate by 5 (max: 300)
+	dechr (NUM -)                     decrease max heart rate by 5 (min: 20)
+	incnumhrsamples (NUM uparrow)     increase number of taken hr samples for rate calculation (max: 60)
+	decnumhrsamples (NUM downarrow)   decrease number of taken hr samples for rate calculation (min: 1)
+	ergostatus                        settings information
