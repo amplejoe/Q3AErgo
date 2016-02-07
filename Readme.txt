@@ -14,7 +14,7 @@ Modding:
 
 Compiling:
 	use create_qvm.bat with optional paramaters 'server', 'client' and 'ui' depending on which project should be compiled:
-	E.g. to compile all projects input:
+	E.g. to compile all projects input (must be done before first run to generate all qvm files):
 	create_qvm server client ui
 	
 Running: 
