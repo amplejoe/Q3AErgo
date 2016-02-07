@@ -23,7 +23,7 @@ Compiling:
 	
 Running: 
 	use runmod.bat with optional parameters  (a full list is given when no required '-age' parameter is given)
-	E.g. 1. for starting mod with default options (3 bots, difficulty 2, map: q3dm1, ...) : 
+	E.g. 1. for starting mod with default options (3 bots, difficulty 2, map: q3dm1, ...): 
 	runmod -age 30
 	E.g. 2. define more options (inverted joystick layout, no map item spawns, no powerup rewards, 5min timelimit, ...):
 	runmod -age 25 -bots 4 -hrtarget recovery -joy inverted -disable worlddrops powerups -time 5
