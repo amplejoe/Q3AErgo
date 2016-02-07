@@ -13,4 +13,8 @@ Keystrokes in the full setup are generated ergometer and pulse sensor hooked up 
 The complete Quake 3 Arena source code was released under the GNU GENERAL PUBLIC LICENSE on [id software's github](https://github.com/id-Software/Quake-III-Arena).
 
 ## Installation, compilation, etc.
+Requirements:
+* Your own copy of Quake 3 Arena
+* Visual Studio (Project created with VS 2013)
+
 There are a few steps to get things up and running, which are outlined in [Readme.txt](https://github.com/amplejoe/Q3AErgo/blob/master/Readme.txt).
