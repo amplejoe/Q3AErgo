@@ -1731,8 +1731,7 @@ void ClientCommand( int clientNum ) {
 	if ( !ent->client ) {
 		return;		// not fully in game yet
 	}
-
-
+	
 	trap_Argv( 0, cmd, sizeof( cmd ) );
 
 	if (Q_stricmp (cmd, "say") == 0) {
