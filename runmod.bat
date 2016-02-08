@@ -125,6 +125,7 @@ set joybind=+bind JOY16 "+lookdown" +bind JOY17 "+lookup"
 
 cd %filepath%
 
+:: important -- sv_pure needs to be set to 0 (done in cfg) because only non-pure servers can run mods
 echo Calling '%filepath%\quake3.exe' (age: %age%, mapname: %map%, bots: %bots%, difficulty: %diff%, fraglimit: %frag%, timelimit: %time%)
 quake3.exe +set r_fullscreen 1 +set r_customaspect 1 +set r_customwidth %width% +set r_customheight %height% +set r_mode "-1" +set fs_game %modDir% +set dedicated 0 +set age %age% +set hrtarget %hrtarget% +set  hrmode %hrmode% +set  items %items% +set  powerups %powerups% +set  weapons %weapons% +set worlddrops %worlddrops% +set map devmap %map% +bot_minplayers %bots% +g_spskill %diff% +set fraglimit %frag% +set timelimit %time% %joybind% +exec ergomod.cfg 
 
