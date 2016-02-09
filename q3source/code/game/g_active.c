@@ -862,19 +862,21 @@ void giveItemTo(gentity_t *ent, gitem_t *item)
 // [ERGO MOD END]
 
 // [ERGO MOD START]
-//reward items randomly, regarding drop rates
+//reward items/weapons/powerups randomly, according to drop rates
 void rewardItems(gentity_t *ent)
 {
+	gclient_t	*client;
 	gitem_t		*item;
 	int			qDropChanceArraySize;
 	int			pickedItem;
-	const char	**qualityPool;
+	char* const *qualityPool;
 	int			qualityPoolSize;
 	int			rndIndex;
 	char		*quality;
 	char		*itemName;
 
 	quality = "UNKNOWN";
+	client = ent->client;
 	
 	// choose quality based on quality drop percentages
 	qDropChanceArraySize = REWARD_NUM_QUALITIES;
@@ -882,20 +884,20 @@ void rewardItems(gentity_t *ent)
 
 	if (pickedItem == REWARD_DROPRATE_INDEX_LQ)
 	{
-		qualityPool = g_rewardItemsLQ; 
-		qualityPoolSize = REWARD_NUM_LQ_ITEMS;
+		qualityPool = client->currentLQRewards;
+		qualityPoolSize = client->currentLQRewardsLength;
 		quality = "LQ";
 	}
 	else if (pickedItem == REWARD_DROPRATE_INDEX_MQ)
 	{
-		qualityPool = g_rewardItemsMQ; 
-		qualityPoolSize = REWARD_NUM_MQ_ITEMS;
+		qualityPool = client->currentMQRewards;
+		qualityPoolSize = client->currentMQRewardsLength;
 		quality = "MQ";
 	}
 	else if (pickedItem == REWARD_DROPRATE_INDEX_HQ)
 	{
-		qualityPool = g_rewardItemsHQ; 
-		qualityPoolSize = REWARD_NUM_HQ_ITEMS;
+		qualityPool = client->currentHQRewards;
+		qualityPoolSize = client->currentHQRewardsLength;
 		quality = "HQ";
 	}
 
@@ -912,114 +914,6 @@ void rewardItems(gentity_t *ent)
 
 	// give item to player / bot 
 	giveItemTo(ent, item);
-}
-// [ERGO MOD END]
-
-// [ERGO MOD START]
-//reward weapons randomly, regarding drop rates
-void rewardWeapons(gentity_t *ent)
-{
-	gitem_t		*item;
-	int			qDropChanceArraySize;
-	int			pickedItem;
-	const char	**qualityPool;
-	int			qualityPoolSize;
-	int			rndIndex;
-	char		*quality;
-	char		*itemName;
-
-	quality = "UNKNOWN";
-
-	// choose quality based on quality drop percentages	
-	qDropChanceArraySize = REWARD_NUM_QUALITIES;
-	pickedItem = randomPickFromPercentages(g_qualityDropPercentages, qDropChanceArraySize);
-
-	if (pickedItem == REWARD_DROPRATE_INDEX_LQ)
-	{
-		qualityPool = g_rewardWeaponsLQ;
-		qualityPoolSize = REWARD_NUM_LQ_WEAPONS;
-		quality = "LQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_MQ)
-	{
-		qualityPool = g_rewardWeaponsMQ;
-		qualityPoolSize = REWARD_NUM_MQ_WEAPONS;
-		quality = "MQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_HQ)
-	{
-		qualityPool = g_rewardWeaponsHQ;
-		qualityPoolSize = REWARD_NUM_HQ_WEAPONS;
-		quality = "HQ";
-	}
-
-	// choose rnd item from pool
-	rndIndex = rand() % qualityPoolSize;
-	item = BG_FindItem(qualityPool[rndIndex]);
-
-	// debug output
-	//trap_SendServerCommand(ent - g_entities, va("print \"REWARDING %s WEAPON: %s\n\"", quality, item->pickup_name));
-	debugPrint(ent, va("print \"REWARDING %s WEAPON: %s\n\"", quality, item->pickup_name));
-
-	// give item to player / bot 
-	giveItemTo(ent, item);
-	
-	// console commands dont work for bots
-	//trap_SendConsoleCommand(EXEC_INSERT, va("give %s\n", item->pickup_name));
-}
-// [ERGO MOD END]
-
-// [ERGO MOD START]
-//reward powerups randomly, regarding drop rates
-void rewardPowerups(gentity_t *ent)
-{
-	gitem_t		*item;
-	int			qDropChanceArraySize;
-	int			pickedItem;
-	const char	**qualityPool;
-	int			qualityPoolSize;
-	int			rndIndex;
-	char		*quality;
-	char		*itemName;
-
-	quality = "UNKNOWN";
-
-	// choose quality based on quality drop percentages	
-	qDropChanceArraySize = REWARD_NUM_QUALITIES;
-	pickedItem = randomPickFromPercentages(g_qualityDropPercentages, qDropChanceArraySize);
-
-	if (pickedItem == REWARD_DROPRATE_INDEX_LQ)
-	{
-		qualityPool = g_rewardPowerupsLQ;
-		qualityPoolSize = REWARD_NUM_LQ_POWERUPS;
-		quality = "LQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_MQ)
-	{
-		qualityPool = g_rewardPowerupsMQ;
-		qualityPoolSize = REWARD_NUM_MQ_POWERUPS;
-		quality = "MQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_HQ)
-	{
-		qualityPool = g_rewardPowerupsHQ;
-		qualityPoolSize = REWARD_NUM_HQ_POWERUPS;
-		quality = "HQ";
-	}
-
-	// choose rnd item from pool
-	rndIndex = rand() % qualityPoolSize;
-	item = BG_FindItem(qualityPool[rndIndex]);
-
-	// debug output
-	//trap_SendServerCommand(ent - g_entities, va("print \"REWARDING %s POWERUP: %s\n\"", quality, item->pickup_name));
-	debugPrint(ent, va("print \"REWARDING %s POWERUP: %s\n\"", quality, item->pickup_name));
-
-	// give item to player / bot 
-	giveItemTo(ent, item);
-
-	// console commands dont work for bots
-	//trap_SendConsoleCommand(EXEC_INSERT, va("give %s\n", item->pickup_name));
 }
 // [ERGO MOD END]
 
@@ -1063,7 +957,8 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 	//trap_SendServerCommand(ent - g_entities, va("print \"Interval: %d, RESIDUAL : %d\n\"", client->hrRewardInterval, client->hrRewardTimeResidual));
 
 	// periodically choose rewards for current reward zone
-	while (*residualTime >= *interval) {
+	while (*residualTime >= *interval) 
+	{
 		
 		*residualTime -= *interval;
 		
@@ -1073,9 +968,37 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 		arrayLength = sizeof(client->pers.rewardDropPercentages) / sizeof(client->pers.rewardDropPercentages[0]);
 		pickedItem = randomPickFromPercentages((const float*) client->pers.rewardDropPercentages, arrayLength);
 
-		if (pickedItem == REWARD_DROPRATE_INDEX_ITEMS) rewardItems(ent);
-		else if (pickedItem == REWARD_DROPRATE_INDEX_WEAPONS) rewardWeapons(ent);
-		else if (pickedItem == REWARD_DROPRATE_INDEX_POWERUPS) rewardPowerups(ent);
+		// set current reward pools
+		if (pickedItem == REWARD_DROPRATE_INDEX_ITEMS)
+		{
+			client->currentLQRewards = g_rewardItemsLQ;
+			client->currentLQRewardsLength = REWARD_NUM_LQ_ITEMS;
+			client->currentMQRewards = g_rewardItemsMQ;
+			client->currentMQRewardsLength = REWARD_NUM_MQ_ITEMS;
+			client->currentHQRewards = g_rewardItemsHQ;
+			client->currentHQRewardsLength = REWARD_NUM_HQ_ITEMS;
+		}
+		else if (pickedItem == REWARD_DROPRATE_INDEX_WEAPONS)
+		{
+			client->currentLQRewards = g_rewardWeaponsLQ;
+			client->currentLQRewardsLength = REWARD_NUM_LQ_WEAPONS;
+			client->currentMQRewards = g_rewardWeaponsMQ;
+			client->currentMQRewardsLength = REWARD_NUM_MQ_WEAPONS;
+			client->currentHQRewards = g_rewardWeaponsHQ;
+			client->currentHQRewardsLength = REWARD_NUM_HQ_WEAPONS;
+		}
+		else if (pickedItem == REWARD_DROPRATE_INDEX_POWERUPS)
+		{
+			client->currentLQRewards = g_rewardPowerupsLQ;
+			client->currentLQRewardsLength = REWARD_NUM_LQ_POWERUPS;
+			client->currentMQRewards = g_rewardPowerupsMQ;
+			client->currentMQRewardsLength = REWARD_NUM_MQ_POWERUPS;
+			client->currentHQRewards = g_rewardPowerupsHQ;
+			client->currentHQRewardsLength = REWARD_NUM_HQ_POWERUPS;
+		} 
+		else return;
+
+		rewardItems(ent);
 	}
 }
 // [ERGO MOD END]

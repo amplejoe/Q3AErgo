@@ -53,18 +53,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 const float g_qualityDropPercentages[] = { REWARD_DROPRATE_QUALITY_LOW, REWARD_DROPRATE_QUALITY_MED, REWARD_DROPRATE_QUALITY_HIGH };
 
 // item, powerup, weapon pool: arrays sorted by quality
-const char	*g_rewardItemsLQ[] = { "5 Health", "Armor Shard", "Bullets", "Grenades" };
-const char	*g_rewardItemsMQ[] = { "25 Health", "50 Health", "Armor", "Shells", "Cells", "Lightning" };
-const char	*g_rewardItemsHQ[] = { "Mega Health", "Medkit", "Heavy Armor", "Rockets", "Slugs", "Bfg Ammo" };
+char * const g_rewardItemsLQ[] = { "5 Health", "Armor Shard", "Bullets", "Grenades" };
+char * const g_rewardItemsMQ[] = { "25 Health", "50 Health", "Armor", "Shells", "Cells", "Lightning" };
+char * const g_rewardItemsHQ[] = { "Mega Health", "Medkit", "Heavy Armor", "Rockets", "Slugs", "Bfg Ammo" };
 
 //const char	*g_rewardWeaponsLQ[] = { "Machinegun", "Grappling Hook", "Grenade Launcher" }; // disable grapple hook: not useful
-const char	*g_rewardWeaponsLQ[] = { "Machinegun", "Grenade Launcher" }; // be sure to adjust REWARD_NUM_LQ_WEAPONS if grappling is included
-const char	*g_rewardWeaponsMQ[] = { "Shotgun", "Plasma Gun", "Lightning Gun" };
-const char	*g_rewardWeaponsHQ[] = { "Rocket Launcher", "Railgun", "BFG10K" };
+char * const g_rewardWeaponsLQ[] = { "Machinegun", "Grenade Launcher" }; // be sure to adjust REWARD_NUM_LQ_WEAPONS if grappling is included
+char * const g_rewardWeaponsMQ[] = { "Shotgun", "Plasma Gun", "Lightning Gun" };
+char * const g_rewardWeaponsHQ[] = { "Rocket Launcher", "Railgun", "BFG10K" };
 
-const char	*g_rewardPowerupsLQ[] = { "Regeneration", "Personal Teleporter" };
-const char	*g_rewardPowerupsMQ[] = { "Speed", "Invisibility" };
-const char	*g_rewardPowerupsHQ[] = { "Quad Damage", "Battle Suit", "Flight" };
+char * const g_rewardPowerupsLQ[] = { "Regeneration", "Personal Teleporter" };
+char * const g_rewardPowerupsMQ[] = { "Speed", "Invisibility" };
+char * const g_rewardPowerupsHQ[] = { "Quad Damage", "Battle Suit", "Flight" };
 
 // [ERGO MOD END]
 
