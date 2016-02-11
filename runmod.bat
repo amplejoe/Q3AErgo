@@ -142,7 +142,7 @@ echo Program Usage: runmod [-age PLAYERAGE] [-hrtarget WORKOUTGOAL] [-disable DO
 echo [PLAYERAGE] ................ Player's age
 echo [WORKOUTGOAL] .............. Heart Rate Target (Default: %hrtarget%), Available:
 echo                                recovery, aerobic, anaerobic
-echo [DOPTIONS] ................. Optionally disableable options (Default: all on), Available:
+echo [DOPTIONS] ................. Disableable options (Default: all on), Available:
 echo                                hrmode, items, powerups, weapons, worlddrops 
 echo [MAPNAME] .................. Quake Map (Default: %map%), Available:
 echo                                q3dm[0-19], q3tourney[1-6], q3ctf[1-4] 
@@ -162,8 +162,8 @@ echo Ingame debug options (bring up console with '~' and prepended with a '\'):
 echo debugmod (NUM *) ............................... debugging on/off
 echo inchr (NUM +) .................................. increase max heart rate by 5 (max: 300)
 echo dechr (NUM -) .................................. decrease max heart rate by 5 (min: 20)
-echo incnumhrsamples (NUM uparrow) .................. increase number of taken hr samples for rate calculation (max: 60)
-echo decnumhrsamples (NUM downarrow) ................ decrease number of taken hr samples for rate calculation (min: 1)
+echo incnumhrsamples (NUM uparrow) .................. increase number of taken hb samples for rate calculation (max: 60)
+echo decnumhrsamples (NUM downarrow) ................ decrease number of taken hb samples for rate calculation (min: 1)
 echo ergostatus ..................................... settings information
 :EXIT
 echo Exiting Script
