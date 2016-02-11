@@ -464,9 +464,9 @@ struct gclient_s {
 
 	// [ERGO MOD START]	
 	int			hrRewardTimeResidual;	// residual time for next hr award (items, weapons, power-ups)	
-	int			hrRewardInterval;		// interval for hr rewards
+	//int		hrRewardInterval;		// interval for hr rewards
 
-	int			brRewardInterval;		// interval for hr rewards
+	//int		brRewardInterval;		// interval for hr rewards
 	int			brRewardTimeResidual;	// residual time for next br award (items, weapons, power-ups)	
 
 	char* const *currentLQRewards;	// quality pool pointers for LQ,MQ,HQ items/weapons/powerups

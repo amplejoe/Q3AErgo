@@ -926,7 +926,7 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 	int			arrayLength;
 	int			hrMode;
 	int			*residualTime;
-	int			*interval;
+	int			interval;
 	
 	client = ent->client;
 	
@@ -936,12 +936,12 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 	if (hrMode)
 	{
 		residualTime = &client->hrRewardTimeResidual;
-		interval = &client->hrRewardInterval;
+		//interval = &client->hrRewardInterval;
 	}
 	else
 	{
 		residualTime = &client->brRewardTimeResidual;
-		interval = &client->brRewardInterval;
+		//interval = &client->brRewardInterval;
 	}
 
 	*residualTime += msec;
@@ -949,18 +949,15 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 	if (rate == 0) return;
 
 	// calc timeInterval (reward frequency in ms)
-	if (!(*interval > 0))
-	{		
-		*interval = (int)((1.0 / rate) * 1000.0); // ms
-	}
+	interval = (int)((1.0 / rate) * 1000.0); // ms
 
 	//trap_SendServerCommand(ent - g_entities, va("print \"Interval: %d, RESIDUAL : %d\n\"", client->hrRewardInterval, client->hrRewardTimeResidual));
 
 	// periodically choose rewards for current reward zone
-	while (*residualTime >= *interval) 
+	while (*residualTime >= interval) 
 	{
 		
-		*residualTime -= *interval;
+		*residualTime -= interval;
 		
 		//trap_SendServerCommand(ent - g_entities, va("print \"REWARD DUE - INTERVAL: %d\n\"", client->hrRewardInterval));
 
@@ -1025,7 +1022,7 @@ void setPerformanceZone(gentity_t *ent, int zone)
 
 			// set new zone & reset interval
 			client->performanceFlags |= zone;
-			client->brRewardInterval = 0;
+			//client->brRewardInterval = 0;
 			client->brRewardTimeResidual = 0;
 
 			//TODO: show status & its update visually (print changes for now) 
@@ -1047,7 +1044,7 @@ void setPerformanceZone(gentity_t *ent, int zone)
 
 			// set new zone & reset interval
 			client->performanceFlags |= zone;
-			client->hrRewardInterval = 0;
+			//client->hrRewardInterval = 0;
 			client->hrRewardTimeResidual = 0;
 
 			// punishments
