@@ -395,7 +395,7 @@ typedef struct {
 	// frequencies	
 	float		rewardFrequencyRecovery;
 	float		rewardFrequencyAerobic;
-	float		powerupFrequencyAnaerobic;	
+	float		rewardFrequencyAnaerobic;	
 	/* Punishments */
 	int			punishmentIntervals[NUM_PUNISHMENT_INTERVALS];	// intervals for punishments
 	// [ERGO MOD END]

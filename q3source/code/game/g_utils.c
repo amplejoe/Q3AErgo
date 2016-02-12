@@ -672,8 +672,9 @@ float getRatePerMinute(const int actualTime, const int lastEvent)
 	rate = 0.0f;
 	if (lastEvent > 0)
 	{
-		// TODO fix problem: level.time only gets adjusted every 50 ms
-		int elapsed = (level.time - lastEvent); // msec
+		// level.time only gets adjusted every 50 ms
+		// server time (actualTime) better
+		int elapsed = (actualTime - lastEvent); // msec
 		
 		//if (elapsed < 1) elapsed = 1; // no need to check for elapsed ns
 		if (elapsed > 0)

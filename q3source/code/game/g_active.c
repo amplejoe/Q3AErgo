@@ -873,7 +873,7 @@ void rewardItems(gentity_t *ent)
 	int			qualityPoolSize;
 	int			rndIndex;
 	char		*quality;
-	char		*itemName;
+	//char		*itemName;
 
 	quality = "UNKNOWN";
 	client = ent->client;
@@ -900,7 +900,12 @@ void rewardItems(gentity_t *ent)
 		qualityPoolSize = client->currentHQRewardsLength;
 		quality = "HQ";
 	}
-
+	else
+	{
+		debugPrint(ent, va("print \"UNKNOWN QUALITY! \n\""));
+		return;
+	}
+		
 	// choose rnd item from pool
 	rndIndex = rand() % qualityPoolSize;
 	item = BG_FindItem(qualityPool[rndIndex]);
@@ -920,8 +925,7 @@ void rewardItems(gentity_t *ent)
 // [ERGO MOD START]
 void handleRewards(gentity_t *ent, float rate, int msec)
 {
-	gclient_t	*client;	
-	float		rnd;			// for picking random item category
+	gclient_t	*client;
 	int			pickedItem;     // final choice (index of dropItems) 
 	int			arrayLength;
 	int			hrMode;
@@ -1216,7 +1220,7 @@ void handleHeartRate(gentity_t *ent, int msec)
 	else if (client->pers.currentHeartRate < client->pers.maxAnaerobicHR)
 	{
 		setPerformanceZone(ent, HR_ZONE_ANAEROBIC);
-		handleRewards(ent, client->pers.powerupFrequencyAnaerobic, msec);
+		handleRewards(ent, client->pers.rewardFrequencyAnaerobic, msec);
 	}
 	// HR too high
 	else

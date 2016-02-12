@@ -1086,19 +1086,19 @@ void ClientBegin( int clientNum ) {
 	{
 		client->pers.rewardFrequencyRecovery = (float) REWARD_MAX_FREQUENCY;
 		client->pers.rewardFrequencyAerobic = (float) REWARD_MED_FREQUENCY;
-		client->pers.powerupFrequencyAnaerobic = (float) REWARD_MIN_FREQUENCY;
+		client->pers.rewardFrequencyAnaerobic = (float) REWARD_MIN_FREQUENCY;
 	}
 	else if (client->sess.targetHR == HR_TARGET_AEROBIC)
 	{
 		client->pers.rewardFrequencyRecovery = (float) REWARD_MED_FREQUENCY;
 		client->pers.rewardFrequencyAerobic = (float) REWARD_MAX_FREQUENCY;
-		client->pers.powerupFrequencyAnaerobic = (float) REWARD_MIN_FREQUENCY;
+		client->pers.rewardFrequencyAnaerobic = (float) REWARD_MIN_FREQUENCY;
 	}
 	else
 	{
 		client->pers.rewardFrequencyRecovery = (float) REWARD_MIN_FREQUENCY;
 		client->pers.rewardFrequencyAerobic = (float) REWARD_MED_FREQUENCY;
-		client->pers.powerupFrequencyAnaerobic = (float) REWARD_MAX_FREQUENCY;
+		client->pers.rewardFrequencyAnaerobic = (float) REWARD_MAX_FREQUENCY;
 	}
 	// set and adjust reward drop percentages (considers disabled options of items, weapons, powerups)
 	setRewardPercentages(ent);
