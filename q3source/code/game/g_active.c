@@ -873,7 +873,6 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 	char			*quality;
 	int				rndIndex;
 
-	//grewardItems_t x = g_rewards.items;
 	client = ent->client;
 	
 	if (ent->client->sess.ergoFlags & E_FL_HRMODE) hrMode = 1;

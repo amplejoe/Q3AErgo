@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #endif
 
 // [ERGO MOD START]
-const weapon_t	cg_weaponHierarchy[] = { WP_NONE, WP_GRAPPLING_HOOK, WP_GAUNTLET, WP_MACHINEGUN, WP_GRENADE_LAUNCHER, WP_SHOTGUN, WP_PLASMAGUN, WP_LIGHTNING, WP_ROCKET_LAUNCHER, WP_RAILGUN, WP_BFG };
+const weapon_t	cg_weaponHierarchy[] = { WP_NONE, WP_GRAPPLING_HOOK, WP_GAUNTLET, WP_MACHINEGUN, WP_SHOTGUN, WP_PLASMAGUN, WP_GRENADE_LAUNCHER, WP_LIGHTNING, WP_ROCKET_LAUNCHER, WP_RAILGUN, WP_BFG };
 // [ERGO MOD END]
 
 //==========================================================================

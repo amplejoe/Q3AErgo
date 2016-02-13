@@ -478,14 +478,7 @@ struct gclient_s {
 
 	//int		brRewardInterval;		// interval for hr rewards
 	int			brRewardTimeResidual;	// residual time for next br award (items, weapons, power-ups)	
-
-	//char* const *currentLQRewards;	// quality pool pointers for LQ,MQ,HQ items/weapons/powerups
-	//char* const *currentMQRewards;  // set accordingly when rewards are due
-	//char* const *currentHQRewards;
-	//int			currentLQRewardsLength; // no way of determining the sizes of underlying arrays
-	//int			currentMQRewardsLength; // need to be set specifically
-	//int			currentHQRewardsLength;
-		
+			
 	int			punishmentIntervalIndex; // current punishment interval
 	int			punishmentTimeResidual;	// interval for punishments
 	int			punishmentIncreaseInterval;		// duration of punishment

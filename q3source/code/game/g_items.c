@@ -53,13 +53,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 const float g_qualityDropPercentages[] = { REWARD_DROPRATE_QUALITY_LOW, REWARD_DROPRATE_QUALITY_MED, REWARD_DROPRATE_QUALITY_HIGH };
 
 // item, powerup, weapon pool: arrays sorted by quality
-char * const g_rewardItemsLQ[] = { "5 Health", "Armor Shard", "Bullets", "Grenades" };
-char * const g_rewardItemsMQ[] = { "25 Health", "50 Health", "Armor", "Shells", "Cells", "Lightning" };
+char * const g_rewardItemsLQ[] = { "5 Health", "Armor Shard", "Bullets", "Shells" };
+char * const g_rewardItemsMQ[] = { "25 Health", "50 Health", "Armor", "Grenades", "Cells", "Lightning" };
 char * const g_rewardItemsHQ[] = { "Mega Health", "Medkit", "Heavy Armor", "Rockets", "Slugs", "Bfg Ammo" };
 
 //const char	*g_rewardWeaponsLQ[] = { "Machinegun", "Grappling Hook", "Grenade Launcher" }; // disable grapple hook: not useful
-char * const g_rewardWeaponsLQ[] = { "Machinegun", "Grenade Launcher" }; // be sure to adjust REWARD_NUM_LQ_WEAPONS if grappling is included
-char * const g_rewardWeaponsMQ[] = { "Shotgun", "Plasma Gun", "Lightning Gun" };
+char * const g_rewardWeaponsLQ[] = { "Machinegun", "Shotgun"}; // be sure to adjust REWARD_NUM_LQ_WEAPONS if grappling is included
+char * const g_rewardWeaponsMQ[] = { "Plasma Gun", "Grenade Launcher", "Lightning Gun" };
 char * const g_rewardWeaponsHQ[] = { "Rocket Launcher", "Railgun", "BFG10K" };
 
 char * const g_rewardPowerupsLQ[] = { "Regeneration", "Personal Teleporter" };
