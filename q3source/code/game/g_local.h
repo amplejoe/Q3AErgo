@@ -114,7 +114,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REWARD_DROPRATE_INDEX_LQ		0
 #define REWARD_DROPRATE_INDEX_MQ		1
 #define REWARD_DROPRATE_INDEX_HQ		2
-// quality drop percentages (init in g_items.c)
+// quality drop percentages
 extern const float	g_qualityDropPercentages[REWARD_NUM_QUALITIES];
 
 // item pool counts
@@ -129,7 +129,8 @@ extern const float	g_qualityDropPercentages[REWARD_NUM_QUALITIES];
 #define REWARD_NUM_LQ_POWERUPS			2
 #define REWARD_NUM_MQ_POWERUPS			2
 #define REWARD_NUM_HQ_POWERUPS			3
-// item, powerup, weapon pool: arrays sorted by quality (init in g_items.c)
+
+// item, powerup, weapon pool: sorted by quality
 extern char	* const g_rewardItemsLQ[REWARD_NUM_LQ_ITEMS];
 extern char	* const g_rewardItemsMQ[REWARD_NUM_MQ_ITEMS];
 extern char	* const g_rewardItemsHQ[REWARD_NUM_HQ_ITEMS];
@@ -143,6 +144,14 @@ extern char	* const g_rewardWeaponsHQ[REWARD_NUM_HQ_WEAPONS];
 extern char	* const g_rewardPowerupsLQ[REWARD_NUM_LQ_POWERUPS];
 extern char	* const g_rewardPowerupsMQ[REWARD_NUM_MQ_POWERUPS];
 extern char	* const g_rewardPowerupsHQ[REWARD_NUM_HQ_POWERUPS];
+
+// size & pointers to all reward qualities
+typedef struct grewardPool_s 
+{
+	int			size;
+	char* const *items;
+} grewardPool_t;
+extern grewardPool_t g_rewards[REWARD_NUM_CATEGORIES * REWARD_NUM_QUALITIES];
 
 /* PUNISHMENTS */
 
@@ -162,6 +171,7 @@ extern char	* const g_rewardPowerupsHQ[REWARD_NUM_HQ_POWERUPS];
 #define PUNISHMENT_AMMO_DECREASE_SLOW	2	// slow weapons
 
 #define PUNISHMENT_SPEED_DECREASE		2.0	// factor by which to decrease speed
+
 
 // [ERGO MOD END]
 
@@ -469,12 +479,12 @@ struct gclient_s {
 	//int		brRewardInterval;		// interval for hr rewards
 	int			brRewardTimeResidual;	// residual time for next br award (items, weapons, power-ups)	
 
-	char* const *currentLQRewards;	// quality pool pointers for LQ,MQ,HQ items/weapons/powerups
-	char* const *currentMQRewards;  // set accordingly when rewards are due
-	char* const *currentHQRewards;
-	int			currentLQRewardsLength; // no way of determining the sizes of underlying arrays
-	int			currentMQRewardsLength; // need to be set specifically
-	int			currentHQRewardsLength;
+	//char* const *currentLQRewards;	// quality pool pointers for LQ,MQ,HQ items/weapons/powerups
+	//char* const *currentMQRewards;  // set accordingly when rewards are due
+	//char* const *currentHQRewards;
+	//int			currentLQRewardsLength; // no way of determining the sizes of underlying arrays
+	//int			currentMQRewardsLength; // need to be set specifically
+	//int			currentHQRewardsLength;
 		
 	int			punishmentIntervalIndex; // current punishment interval
 	int			punishmentTimeResidual;	// interval for punishments

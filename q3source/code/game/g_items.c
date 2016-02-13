@@ -66,6 +66,13 @@ char * const g_rewardPowerupsLQ[] = { "Regeneration", "Personal Teleporter" };
 char * const g_rewardPowerupsMQ[] = { "Speed", "Invisibility" };
 char * const g_rewardPowerupsHQ[] = { "Quad Damage", "Battle Suit", "Flight" };
 
+grewardPool_t g_rewards[] =
+{
+	{ REWARD_NUM_LQ_ITEMS, g_rewardItemsLQ }, { REWARD_NUM_MQ_ITEMS, g_rewardItemsMQ }, { REWARD_NUM_HQ_ITEMS, g_rewardItemsHQ },
+	{ REWARD_NUM_LQ_WEAPONS, g_rewardWeaponsLQ }, { REWARD_NUM_MQ_WEAPONS, g_rewardWeaponsMQ }, { REWARD_NUM_HQ_WEAPONS, g_rewardWeaponsHQ },
+	{ REWARD_NUM_LQ_POWERUPS, g_rewardPowerupsLQ }, { REWARD_NUM_MQ_POWERUPS, g_rewardPowerupsMQ }, { REWARD_NUM_HQ_POWERUPS, g_rewardPowerupsHQ },
+};
+
 // [ERGO MOD END]
 
 int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {

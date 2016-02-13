@@ -821,8 +821,6 @@ int randomPickFromPercentages(const float *percentageArray, int size)
 	//trap_SendServerCommand(ent - g_entities, va("print \"RND Nr: %0.3f\n\"", rnd));
 	pickedIndex = -1.0;
 
-	//trap_SendServerCommand(ent - g_entities, va("print \"Interval: %d, RESIDUAL : %d\n\""
-
 	// pick random category based on percentages
 	for (counter = 0; counter < size; counter = counter + 1)
 	{
@@ -835,7 +833,6 @@ int randomPickFromPercentages(const float *percentageArray, int size)
 	}
 	
 	return pickedIndex;
-
 }
 
 // [ERGO MOD END]
@@ -862,76 +859,21 @@ void giveItemTo(gentity_t *ent, gitem_t *item)
 // [ERGO MOD END]
 
 // [ERGO MOD START]
-//reward items/weapons/powerups randomly, according to drop rates
-void rewardItems(gentity_t *ent)
-{
-	gclient_t	*client;
-	gitem_t		*item;
-	int			qDropChanceArraySize;
-	int			pickedItem;
-	char* const *qualityPool;
-	int			qualityPoolSize;
-	int			rndIndex;
-	char		*quality;
-	//char		*itemName;
-
-	quality = "UNKNOWN";
-	client = ent->client;
-	
-	// choose quality based on quality drop percentages
-	qDropChanceArraySize = REWARD_NUM_QUALITIES;
-	pickedItem = randomPickFromPercentages(g_qualityDropPercentages, qDropChanceArraySize);
-
-	if (pickedItem == REWARD_DROPRATE_INDEX_LQ)
-	{
-		qualityPool = client->currentLQRewards;
-		qualityPoolSize = client->currentLQRewardsLength;
-		quality = "LQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_MQ)
-	{
-		qualityPool = client->currentMQRewards;
-		qualityPoolSize = client->currentMQRewardsLength;
-		quality = "MQ";
-	}
-	else if (pickedItem == REWARD_DROPRATE_INDEX_HQ)
-	{
-		qualityPool = client->currentHQRewards;
-		qualityPoolSize = client->currentHQRewardsLength;
-		quality = "HQ";
-	}
-	else
-	{
-		debugPrint(ent, va("print \"UNKNOWN QUALITY! \n\""));
-		return;
-	}
-		
-	// choose rnd item from pool
-	rndIndex = rand() % qualityPoolSize;
-	item = BG_FindItem(qualityPool[rndIndex]);
-
-	// debug output
-	//trap_SendServerCommand(ent - g_entities, va("print \"REWARDING %s ITEM: %s \n\"", quality, item->pickup_name));
-	debugPrint(ent, va("print \"REWARDING %s ITEM: %s \n\"", quality, item->pickup_name));
-
-	// console commands dont work for bots	
-	//trap_SendConsoleCommand(EXEC_INSERT, va("give %s\n", item->pickup_name));
-
-	// give item to player / bot 
-	giveItemTo(ent, item);
-}
-// [ERGO MOD END]
-
-// [ERGO MOD START]
 void handleRewards(gentity_t *ent, float rate, int msec)
 {
-	gclient_t	*client;
-	int			pickedItem;     // final choice (index of dropItems) 
-	int			arrayLength;
-	int			hrMode;
-	int			*residualTime;
-	int			interval;
-	
+	gclient_t		*client;
+	gitem_t			*item;
+	grewardPool_t	*qualityPool;
+	int				pickedItem;     // final item choice 
+	int				pickedQuality;  // final quality choice 
+	int				rewardIndex;
+	int				hrMode;
+	int				*residualTime;
+	int				interval;	
+	char			*quality;
+	int				rndIndex;
+
+	//grewardItems_t x = g_rewards.items;
 	client = ent->client;
 	
 	if (ent->client->sess.ergoFlags & E_FL_HRMODE) hrMode = 1;
@@ -966,40 +908,48 @@ void handleRewards(gentity_t *ent, float rate, int msec)
 		//trap_SendServerCommand(ent - g_entities, va("print \"REWARD DUE - INTERVAL: %d\n\"", client->hrRewardInterval));
 
 		//reward stuff randomly & regarding drop rates
-		arrayLength = sizeof(client->pers.rewardDropPercentages) / sizeof(client->pers.rewardDropPercentages[0]);
-		pickedItem = randomPickFromPercentages((const float*) client->pers.rewardDropPercentages, arrayLength);
+		// arrayLength = sizeof(client->pers.rewardDropPercentages) / sizeof(client->pers.rewardDropPercentages[0]);
+		pickedItem = randomPickFromPercentages((const float*) client->pers.rewardDropPercentages, REWARD_NUM_CATEGORIES);
+		pickedQuality = randomPickFromPercentages(g_qualityDropPercentages, REWARD_NUM_QUALITIES);
 
-		// set current reward pools
-		if (pickedItem == REWARD_DROPRATE_INDEX_ITEMS)
+		if ((pickedItem < 0) || (pickedQuality < 0))
 		{
-			client->currentLQRewards = g_rewardItemsLQ;
-			client->currentLQRewardsLength = REWARD_NUM_LQ_ITEMS;
-			client->currentMQRewards = g_rewardItemsMQ;
-			client->currentMQRewardsLength = REWARD_NUM_MQ_ITEMS;
-			client->currentHQRewards = g_rewardItemsHQ;
-			client->currentHQRewardsLength = REWARD_NUM_HQ_ITEMS;
+			debugPrint(ent, va("print \"ERROR REWARDING ITEM! \n\""));
+			return;
 		}
-		else if (pickedItem == REWARD_DROPRATE_INDEX_WEAPONS)
-		{
-			client->currentLQRewards = g_rewardWeaponsLQ;
-			client->currentLQRewardsLength = REWARD_NUM_LQ_WEAPONS;
-			client->currentMQRewards = g_rewardWeaponsMQ;
-			client->currentMQRewardsLength = REWARD_NUM_MQ_WEAPONS;
-			client->currentHQRewards = g_rewardWeaponsHQ;
-			client->currentHQRewardsLength = REWARD_NUM_HQ_WEAPONS;
-		}
-		else if (pickedItem == REWARD_DROPRATE_INDEX_POWERUPS)
-		{
-			client->currentLQRewards = g_rewardPowerupsLQ;
-			client->currentLQRewardsLength = REWARD_NUM_LQ_POWERUPS;
-			client->currentMQRewards = g_rewardPowerupsMQ;
-			client->currentMQRewardsLength = REWARD_NUM_MQ_POWERUPS;
-			client->currentHQRewards = g_rewardPowerupsHQ;
-			client->currentHQRewardsLength = REWARD_NUM_HQ_POWERUPS;
-		} 
-		else return;
 
-		rewardItems(ent);
+		switch (pickedQuality)
+		{
+		case 0:
+			quality = "LQ";
+			break;
+		case 1:
+			quality = "MQ";
+			break;
+		case 2:
+			quality = "HQ";
+			break;
+		default:
+			quality = "UNKNOWN";
+			break;
+		}
+
+		rewardIndex = (pickedItem * REWARD_NUM_CATEGORIES) + pickedQuality; // index for quality pool
+		qualityPool =  &g_rewards[rewardIndex];
+
+		// choose rnd item from pool
+		rndIndex = rand() % qualityPool->size;
+		item = BG_FindItem(qualityPool->items[rndIndex]);				
+
+		// debug output
+		//trap_SendServerCommand(ent - g_entities, va("print \"REWARDING %s ITEM: %s \n\"", quality, item->pickup_name));
+		debugPrint(ent, va("print \"REWARDING %s ITEM: %s \n\"", quality, item->pickup_name));
+
+		// console commands dont work for bots	
+		//trap_SendConsoleCommand(EXEC_INSERT, va("give %s\n", item->pickup_name));
+
+		// give item to player / bot 
+		giveItemTo(ent, item);
 	}
 }
 // [ERGO MOD END]
@@ -1063,14 +1013,12 @@ void setPerformanceZone(gentity_t *ent, int zone)
 			//printRewardZones(ent);			
 		}		
 	}
-
 }
 // [ERGO MOD END]
 
 // [ERGO MOD START]
 void handlePunishments(gentity_t *ent, int msec)
-{
-	
+{	
 	gclient_t	*client;
 	int			rndNum;
 	int			dmg;
@@ -1120,7 +1068,6 @@ void handlePunishments(gentity_t *ent, int msec)
 			debugPrint(ent, va("print \"Punishing Health - %d, Interval: %d ms\n\"", dmg, client->pers.punishmentIntervals[client->punishmentIntervalIndex]));
 		}	
 	}	
-
 }
 // [ERGO MOD END]
 
@@ -1230,7 +1177,6 @@ void handleHeartRate(gentity_t *ent, int msec)
 		setPerformanceZone(ent, HR_ZONE_HIGH);
 		
 	}
-
 }
 // [ERGO MOD END]
 
